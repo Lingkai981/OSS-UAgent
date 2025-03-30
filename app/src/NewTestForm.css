@@ -1,0 +1,70 @@
+.container {
+    display: flex;        /* 关键：使用 flex 布局 */
+    align-items: flex-start; 
+    gap: 20px;            /* 左右留出一些空隙 */
+    margin: 20px;
+    /* border: 1px solid #ddd; */
+  }
+  
+  /* 左右两栏可以根据需要进行宽度、排列、对齐的调整 */
+  .left-section {
+    flex: 1; /* 或者直接给个固定宽度，比如 width: 40%; */
+    
+  }
+  
+  .right-section {
+    flex: 1; /* 或者 width: 60%; */
+  }
+
+  .loading {
+    background: #fff3cd;
+    color: #856404;
+  }
+  
+  /* 让表单全宽度以免过度挤压 */
+  .new-test-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+    
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+  
+  /* 简易按钮样式 */
+  .upload-btn,
+  .submit-btn {
+    cursor: pointer;
+    margin-top: 8px;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+  }
+  
+  .file-name {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* 右侧结果展示 */
+  .result-container {
+    border: 1px solid #ddd;
+    padding: 16px;
+    background: #f8f8f8;
+  }
+  
+  .json-result {
+    background-color: #fff;
+    padding: 8px;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  

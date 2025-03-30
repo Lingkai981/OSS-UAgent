@@ -1,0 +1,53 @@
+/* 外层容器，使用单列布局即可 */
+.result-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* 适度控制宽度和居中，仅供演示 */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  /* 基本的文字和分组 */
+  .result-item {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .result-item span {
+    font-weight: bold;
+  }
+  
+  /* 柱状图区域 */
+  .chart-section {
+    margin: 1rem 0;
+  }
+  
+  /* 分析文本区域 */
+  .result-analysis {
+    background: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ddd;
+  }
+  
+  /* 详细分析列表 */
+  .details-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .evaluation-block {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background: #fafafa;
+  }
+  
+  /* 时间戳样式 */
+  .timestamp {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
