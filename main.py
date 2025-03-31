@@ -113,14 +113,12 @@ class Get_prompty_expert(BaseModel):
 
 
 llm = ChatOpenAI(
-    openai_api_base="https://chatapi.littlewheat.com/v1",
     openai_api_key=my_config.get_api_key(),
     model = 'gpt-4o',
     temperature=0.7
 )
 
 embeddings = OpenAIEmbeddings(
-    openai_api_base="https://chatapi.littlewheat.com/v1",
     openai_api_key=my_config.get_api_key()
 )
 
@@ -310,7 +308,6 @@ def GetPromptyExpert(code):
 
 @app.route('/api/analyze-github', methods=['POST'])
 def analyze_github():
-    """ 解析 GitHub 仓库，自动判断分支，获取 README、代码文件及算法分析 """
     data = request.json
     if not data or 'githubUrl' not in data:
         return jsonify({"error": "Missing GitHub URL"}), 400
@@ -346,9 +343,7 @@ def analyze_github():
 
         yield (json.dumps({"status": f"**Branch: {branch_name}"}) + "\n").encode("utf-8")
 
-        
-
-        # 获取 README 和代码文件
+    
         yield (json.dumps({"status": "Fetching README..."}) + "\n").encode("utf-8")
         readme_content = fetch_readme(api_base_url, branch_name)
 
@@ -565,15 +560,10 @@ def analyze_github():
                 "analysis": data['analysis'],
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }) + "\n").encode("utf-8")
-            
-
-            
-            
 
     return Response(stream_analysis(), content_type='application/json; charset=utf-8', direct_passthrough=True)
 
 def extract_repo_info(url):
-    """ 从 GitHub URL 提取 'owner/repo' 和 'branch' (如果存在) """
     match = re.search(r"github\.com/([^/]+/[^/]+)(?:/tree/([^/]+))?", url)
     if match:
         return match.group(1), match.group(2)  # (repo_name, branch_name)
@@ -581,7 +571,6 @@ def extract_repo_info(url):
 
 
 def get_default_branch(api_base_url):
-    """ 获取仓库默认分支 """
     response = requests.get(api_base_url)
     if response.status_code == 200:
         return response.json().get("default_branch", "main")
@@ -589,13 +578,11 @@ def get_default_branch(api_base_url):
 
 
 def fetch_github_repo(api_base_url):
-    """ 获取仓库基本信息 """
     response = requests.get(api_base_url)
     return response.json() if response.status_code == 200 else {}
 
 
 def fetch_readme(api_base_url, branch_name):
-    """ 获取 README.md 内容 """
     url = f"{api_base_url}/contents/README.md?ref={branch_name}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -605,7 +592,6 @@ def fetch_readme(api_base_url, branch_name):
 
 
 def fetch_code_files(api_base_url, branch_name):
-    """ 获取 GitHub 仓库中指定分支的代码文件 """
     url = f"{api_base_url}/git/trees/{branch_name}?recursive=1"
     response = requests.get(url)
     if response.status_code == 200:
@@ -616,12 +602,10 @@ def fetch_code_files(api_base_url, branch_name):
 
 
 def filter_target_directories(code_files):
-    """ 过滤出特定文件夹中的文件 """
     target_files = [file for file in code_files if any(dir_name in file.split('/') for dir_name in TARGET_DIRECTORIES)]
-    return target_files if target_files else code_files  # 如果目标目录为空，返回所有文件
+    return target_files if target_files else code_files 
 
 def fetch_remote_file(api_base_url, file_path, branch_name="main"):
-    """ 获取 GitHub 仓库中的文件内容 """
     url = f"{api_base_url}/contents/{file_path}?ref={branch_name}"
     response = requests.get(url)
 
@@ -746,14 +730,6 @@ def EvaluationCode(anonymization_rules, algorithm, code, language, platform):
         print(data['evaluations'][i])
     
     print(data['analysis'])
-
-    # results = {
-    #     "platform": platform,
-    #     "algorithm": algorithm,
-    #     "evaluations": data['evaluations'],
-    #     "analysis": data['analysis'],
-    #     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # }
 
     yield (json.dumps({
         "platform": platform,

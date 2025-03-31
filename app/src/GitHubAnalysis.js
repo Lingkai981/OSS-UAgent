@@ -28,28 +28,28 @@ const GitHubAnalysis = () => {
 
   useEffect(() => {
     if (result5) {
-      setIsLoading1(false); // `result5` 触发时，隐藏 `isLoading1`
-      setIsLoading2(true);  // `isLoading2` 立刻显示
+      setIsLoading1(false); 
+      setIsLoading2(true); 
     }
   }, [result5]);
 
   useEffect(() => {
     if (result6) {
-      setIsLoading2(false); // `result6` 触发时，隐藏 `isLoading2`
-      setIsLoading3(true);  // `isLoading3` 立刻显示
+      setIsLoading2(false); 
+      setIsLoading3(true);  
     }
   }, [result6]);
 
   useEffect(() => {
     if (result7) {
-      setIsLoading3(false); // `result7` 触发时，隐藏 `isLoading3`
-      setIsLoading4(true);  // `isLoading4` 立刻显示
+      setIsLoading3(false); 
+      setIsLoading4(true);  
     }
   }, [result7]);
 
   useEffect(() => {
     if (result8) {
-      setIsLoading4(false); // `result8` 触发时，隐藏 `isLoading4`
+      setIsLoading4(false);
     }
   }, [result8]);
 
@@ -102,7 +102,6 @@ const GitHubAnalysis = () => {
               seenLogs.add(parsedData.status);
               setLogs((prevLogs) => [...prevLogs, parsedData.status]);
             } else {
-              // 根据返回的 JSON key 分配数据到不同 result
               if ("junior_ready" in parsedData) setResult1(parsedData);
               else if ("intermediate_ready" in parsedData) setResult2(parsedData);
               else if ("senior_ready" in parsedData) setResult3(parsedData);
@@ -114,7 +113,7 @@ const GitHubAnalysis = () => {
               else if ("evaluations" in parsedData) setResult9(parsedData); 
             }
           } catch (err) {
-            // JSON 解析失败可能是数据不完整，继续等待
+            
           }
         }
       }
@@ -153,7 +152,7 @@ const GitHubAnalysis = () => {
         {error && <div className="error">Error: {error}</div>}
 
         <div className="grid-container">
-          {/* 4-4-1 布局 */}
+            
           <div className="grid-item">
             {result1 && (
                 <p>

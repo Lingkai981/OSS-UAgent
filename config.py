@@ -113,22 +113,6 @@ class Config:
         }}
         """
 
-        # self.SUBSTITUTE_TEMPLATE = """Perform a unified anonymization process on these descriptions or code snippets. Replace any platform names with 'Platform'. Replace core API functions while ensuring that no platform-related information appears in the API function names. The anonymization method should be applied consistently across all descriptions and code.
-        
-        # **The given descriptions or code snippets:**
-        # {codes}
-
-        # **Only output JSON format:**
-        # {{
-        #     "replacement_standards": "Anonymization Rules Applied",
-        #     "output": [
-        #        {{"code": "description"}},
-        #        {{"code": "code1"}},
-        #        {{"code": "code2"}}
-        #     ]
-        # }}
-        # """
-
         self.SUBSTITUTE_TEMPLATE = """Apply anonymization to the provided code. You need to output anonymization rules for the core functions (excluding generic functions), including the original functions and their anonymized versions. The anonymized functions should be different from the original ones but should still convey a similar meaning. Also determine the programming language.
 
         **The given codes:**
@@ -274,7 +258,6 @@ class Config:
 
     def build_faiss_index(self, input_dir, output_dir):
         embeddings = OpenAIEmbeddings(
-            openai_api_base="https://chatapi.littlewheat.com/v1",
             openai_api_key=self.get_api_key()
         )
 

@@ -113,12 +113,12 @@
 }
 
 .left-section {
-  flex: 1; /* 或者直接给个固定宽度，比如 width: 40%; */
+  flex: 1; 
   
 }
 
 .right-section {
-  flex: 1; /* 或者 width: 60%; */
+  flex: 1; 
 }
 
 .timestamp {
@@ -218,7 +218,6 @@ textarea {
   color: #d9534f;
 }
 
-/* 导航栏样式 */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -245,12 +244,10 @@ textarea {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* 内容样式 */
 .content {
   padding: 20px;
 }
 
-/* 统一表单样式 */
 form {
   background: #f9f9f9;
   padding: 20px;

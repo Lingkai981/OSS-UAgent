@@ -9,14 +9,24 @@ This project is a LLM-based usability evaluation framework including an automate
 ```shell
 python -m venv venv                                             
 source venv/bin/activate
-pip install flask flask-cors langchain openai faiss-cpu langchain-openai pydantic
+pip install flask flask-cors langchain openai faiss-cpu langchain-openai pydantic langchain_community
 ```
-### Configure the API key in config.py
+#### Set the OpenAI API key as an environment variable:
+Open your terminal and add the following line to your shell configuration file (.bashrc, .zshrc, etc.):
 ```shell
-def get_api_key(self):
-    return "YOUR_API_KEY"  # Replace with your actual API key
+export OPENAI_API_KEY="your-api-key-here"
+```
+Reload the shell configuration:
+```shell
+source ~/.bashrc   # If you use bash
+source ~/.zshrc    # If you use zsh
 ```
 ### Running the Program
 ```shell
 python3 main.py
+```
+Start a new terminal
+```shell
+cd app/
+npm start
 ```

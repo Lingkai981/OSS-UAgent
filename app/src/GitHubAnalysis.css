@@ -87,8 +87,8 @@
 
 .grid-item {
     display: flex;
-    flex-direction: column; /* 让文本和图片垂直排列 */
-    align-items: center; /* 水平居中 */
+    flex-direction: column; 
+    align-items: center; 
     /* justify-content: center; */
     max-width: 100%;
 }
@@ -122,9 +122,9 @@
 
 /* Code Display Area */
 .code-display {
-    width: 95%; /* 拉满宽度 */
-    max-height: 300px; /* 限定高度 */
-    overflow: auto; /* 允许滚动 */
+    width: 95%;
+    max-height: 300px;
+    overflow: auto;
     background-color: #f4f4f4;
     padding: 10px;
     border-radius: 12px;
@@ -132,7 +132,6 @@
     font-family: monospace;
 }
 
-  /* 右侧结果展示 */
   .result-container {
     border: 1px solid #ddd;
     padding: 12px;
@@ -141,7 +140,7 @@
 
   .evaluation-section {
     display: flex;
-    justify-content: center; /* 居中 */
+    justify-content: center;
     align-items: center;
     width: 100%;
     padding: 20px;
@@ -149,17 +148,17 @@
   
   .chart-analysis-container {
     display: flex;
-    gap: 40px; /* 左右间距 */
-    align-items: center; /* 让柱状图和分析文字对齐 */
+    gap: 40px; 
+    align-items: center;
   }
   
   .chart-container {
-    flex: 1; /* 让 BarChart 占据一半空间 */
+    flex: 1; 
     min-width: 50%;
   }
   
   .result-analysis-2 {
-    flex: 1; /* 让 Result Analysis 占据一半空间 */
+    flex: 1; 
     min-width: 40%;
     max-width: 50%; 
     padding-right: 80px;

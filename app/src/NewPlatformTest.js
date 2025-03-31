@@ -62,7 +62,6 @@ const NewTestForm = ({ onAddTest }) => {
 
   return (
     <div className="container">
-      {/* 左侧：表单区域 */}
       <div className="left-section">
         <form className="new-test-form">
 

@@ -3,10 +3,9 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import "./ResultDisplay.css";
 
 const ResultDisplay = ({ result, loading }) => {
-  // 如果还在加载或者没有数据，就不显示下方内容
+  
   if (loading || !result) return null;
 
-  // 准备柱状图所需数据
   const chartData = result.evaluations?.map((evaluation, index) => ({
     name: ["Junior", "Intermediate", "Senior", "Expert"][index],
     Compliance: evaluation.compliance_score,
@@ -28,7 +27,6 @@ const ResultDisplay = ({ result, loading }) => {
         {result.algorithm}
       </div>
 
-      {/* 柱状图 + 基本分析 */}
       <div className="chart-section">
         <h3>Evaluation Scores</h3>
         <BarChart width={600} height={300} data={chartData}>
@@ -42,13 +40,11 @@ const ResultDisplay = ({ result, loading }) => {
         </BarChart>
       </div>
 
-      {/* 结果分析文字 */}
       <div className="result-analysis">
         <h3>Result Analysis</h3>
         <p>{result.analysis}</p>
       </div>
 
-      {/* 详细分析 */}
       <div className="details-section">
         <h3>Detailed Analysis</h3>
         {result.evaluations?.map((evaluation, index) => (
@@ -71,7 +67,6 @@ const ResultDisplay = ({ result, loading }) => {
         ))}
       </div>
 
-      {/* 时间戳 */}
       <div className="timestamp">
         <strong>Computation Time:</strong> {result.timestamp}
       </div>
