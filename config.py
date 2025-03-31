@@ -258,7 +258,6 @@ class Config:
 
     def build_faiss_index(self, input_dir, output_dir):
         embeddings = OpenAIEmbeddings(
-            openai_api_base="https://chatapi.littlewheat.com/v1",
             openai_api_key=self.get_api_key()
         )
 
