@@ -112,7 +112,7 @@ class Config:
           ]
         }}
         """
-
+        
         self.SUBSTITUTE_TEMPLATE = """Apply anonymization to the provided code. You need to output anonymization rules for the core functions (excluding generic functions), including the original functions and their anonymized versions. The anonymized functions should be different from the original ones but should still convey a similar meaning. Also determine the programming language.
 
         **The given codes:**
@@ -258,6 +258,7 @@ class Config:
 
     def build_faiss_index(self, input_dir, output_dir):
         embeddings = OpenAIEmbeddings(
+            openai_api_base="https://chatapi.littlewheat.com/v1",
             openai_api_key=self.get_api_key()
         )
 

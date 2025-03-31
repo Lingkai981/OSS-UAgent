@@ -8,14 +8,14 @@
 **Platform** is a distributed framework for programming a broad spectrum of graph algorithms, including clustering, centrality, traversal, matching, mining, etc. Based on its high-level interface and an efficient system implementation, Platform achieves good expressiveness, productivity and efficiency at the same time. Platform follows the vertex-centric philosophy, but it moves a step further for stronger expressiveness by providing flexible control flow, the operations on arbitrary vertex sets and beyond-neighborhood communication. Platform makes diverse complex graph algorithms easy to write at the distributed runtime. The algorithms expressed in Platform take only a few lines of code, and provide a satisfactory performance.
 
 ## Publication 
-- Xue Li, Ke Meng, Lu Qin, Longbin Lai, Wenyuan Yu, Zhengping Qian, Xuemin Lin, Jingren Zhou. [FLASH: A Framework for Programming Distributed Graph Processing Algorithms](https://ieeexplore.ieee.org/document/10184838). The 39th IEEE International Conference on Data Engineering (ICDE), 2023.
+- Xue Li, Ke Meng, Lu Qin, Longbin Lai, Wenyuan Yu, Zhengping Qian, Xuemin Lin, Jingren Zhou. [Platform: A Framework for Programming Distributed Graph Processing Algorithms](https://ieeexplore.ieee.org/document/10184838). The 39th IEEE International Conference on Data Engineering (ICDE), 2023.
 
 Please cite the paper in your publications if our work helps your research.
 ```bibtex
 @INPROCEEDINGS{10184838,
   author={Li, Xue and Meng, Ke and Qin, Lu and Lai, Longbin and Yu, Wenyuan and Qian, Zhengping and Lin, Xuemin and Zhou, Jingren},
   booktitle={2023 IEEE 39th International Conference on Data Engineering (ICDE)}, 
-  title={Flash: A Framework for Programming Distributed Graph Processing Algorithms}, 
+  title={Platform: A Framework for Programming Distributed Graph Processing Algorithms}, 
   year={2023},
   pages={232-244},
   doi={10.1109/ICDE55515.2023.00025}}
@@ -35,9 +35,9 @@ Suppose we use 4 Machines named Orion1, Orion2, Orion3, and Orion4, and Orion1 i
     
 ### Step 2: Compile Platform
 Suppose we put the Platform Folder into a shared folder with location /myname/
-Go to folder `/myname/flash/run/` and execute the command: 
+Go to folder `/myname/platform/run/` and execute the command: 
 
-`./compile-flash.sh`
+`./compile-platform.sh`
 
 ## Preparing Graph Data
 
@@ -46,7 +46,7 @@ Suppose we use the orkut dataset under the folder `/myname/dataset/orkut/`
 #### Step 1.1
 Download the txt file from [snap](http://snap.stanford.edu/data/com-Orkut.html) and extract it to `/myname/dataset/orkut/` on Orion1, and rename the txt file to graph.txt. Now we have  `/myname/dataset/orkut/graph.txt`
 #### Step 1.2 
-Goto folder /myname/flash/run/ and execute the following command for an undirected graph: 
+Goto folder /myname/platform/run/ and execute the following command for an undirected graph: 
 
 `./txt2bin.sh /myname/dataset/orkut/ /scratch/tmp/`
 
@@ -68,23 +68,23 @@ Now the text file will be stored as binary files on the Master Machine
 ### Step 2: Upload the Graph to the Distributed File System
 Suppose we want to run 8 processes, i.e., each machine has 2 processes. 
 #### Step 2.1 
-Edit `/myname/flash/run/host_file` to be the `machine_name:1` on each line of `host_file` (see the sample)
+Edit `/myname/platform/run/host_file` to be the `machine_name:1` on each line of `host_file` (see the sample)
 #### Step 2.2
-Goto folder `/myname/flash/run/` and execute the command: 
+Goto folder `/myname/platform/run/` and execute the command: 
 
 `./format.sh 8 /myname/dataset/orkut/ /scratch/gfs/ orkut`
 
 ## Running Platform Applications
-We have provided some example applications in `/myname/flash/src/apps/` ， and more applications are continuously being added. The following steps are required for adding and executing a new algorithm in Platform. Please refer to our [paper](https://graphscope.io/flash-full.pdf) for demonstrations of the example algorithms.
+We have provided some example applications in `/myname/platform/src/apps/` ， and more applications are continuously being added. The following steps are required for adding and executing a new algorithm in Platform. Please refer to our [paper](https://graphscope.io/platform-full.pdf) for demonstrations of the example algorithms.
 
 ### Step 1: Write a algorithm
-Write a Platform c++ algorithm under folder `/myname/flash/src/apps/`, for example `/myname/flash/src/apps/bfs.cpp`
+Write a Platform c++ algorithm under folder `/myname/platform/src/apps/`, for example `/myname/platform/src/apps/bfs.cpp`
 ### Step 2: Compile the algorithm
-Goto folder /myname/flash/run/ and compile the algorithm using 
+Goto folder /myname/platform/run/ and compile the algorithm using 
 
 `./compile.sh bfs`
 ### Step 3: Execute 
-Goto folder /myname/flash/run/ and run the algorithm using: 
+Goto folder /myname/platform/run/ and run the algorithm using: 
 
 `mpirun -n 8 -hostfile host_file ./bfs /scratch/gfs/ orkut 1`
 
@@ -116,7 +116,7 @@ Here, the last 1 is a parameter used in bfs.cpp, which is the start node id for 
 using namespace std;
 
 template<class VTYPE, class F, class M> 
-inline VSet mapVertices(VSet &U, F &f, M &m, bool b = true) {
+inline VSet nodeTransform(VSet &U, F &f, M &m, bool b = true) {
 	if (b) 
 		return U.Filter(use_f_v(f)).Local(use_map_v(m));
 	else
@@ -125,17 +125,17 @@ inline VSet mapVertices(VSet &U, F &f, M &m, bool b = true) {
 }
 
 template<class VTYPE, class F> 
-inline VSet mapVertices(VSet &U, F &f) {
+inline VSet nodeTransform(VSet &U, F &f) {
 	return U.Filter(use_f_v(f));
 }
 
 template<class VTYPE, class F, class M, class C, class H> 
-VSet mapEdgesDense(Graph<VTYPE> &G, VSet &U, H h, F &f, M &m, C &c, bool b = true) {
-	return mapEdgesDense(G, U, h, All, f, m, c, b);
+VSet linkMapThickProcess(Graph<VTYPE> &G, VSet &U, H h, F &f, M &m, C &c, bool b = true) {
+	return linkMapThickProcess(G, U, h, All, f, m, c, b);
 }
 
 template<class VTYPE, class F, class M, class C> 
-VSet mapEdgesDense(Graph<VTYPE> &G, VSet &U, int h, VSet &T, F &f, M &m, C &c, bool b = true) {
+VSet linkMapThickProcess(Graph<VTYPE> &G, VSet &U, int h, VSet &T, F &f, M &m, C &c, bool b = true) {
 	bool flag = ((&U) == (&All));
 	if (!flag) U.sync();
 	VSet res;
@@ -167,7 +167,7 @@ VSet mapEdgesDense(Graph<VTYPE> &G, VSet &U, int h, VSet &T, F &f, M &m, C &c, b
 }
 
 template<class VTYPE, class F, class M, class C, class H> 
-VSet mapEdgesDense(Graph<VTYPE> &G, VSet &U, H &h, VSet &T, F &f, M &m, C &c, bool b = true) {
+VSet linkMapThickProcess(Graph<VTYPE> &G, VSet &U, H &h, VSet &T, F &f, M &m, C &c, bool b = true) {
 	bool flag = ((&U) == (&All));
 	if (!flag) U.sync();
 	VSet res;
@@ -186,7 +186,7 @@ VSet mapEdgesDense(Graph<VTYPE> &G, VSet &U, H &h, VSet &T, F &f, M &m, C &c, bo
 }
 
 template<class VTYPE, class F, class M, class C, class R> 
-VSet mapEdgesSparse(Graph<VTYPE> &G, VSet &U, int h, F &f, M &m, C &c, R &r) {
+VSet linkMapThinProcess(Graph<VTYPE> &G, VSet &U, int h, F &f, M &m, C &c, R &r) {
 	VSet res;
 	if (h == EU) {
 		DefineCmb(cmb) {
@@ -210,7 +210,7 @@ VSet mapEdgesSparse(Graph<VTYPE> &G, VSet &U, int h, F &f, M &m, C &c, R &r) {
 }
 
 template<class VTYPE, class F, class M, class C, class R, class H> 
-VSet mapEdgesSparse(Graph<VTYPE> &G, VSet &U, H &h, F &f, M &m, C &c, R &r) {
+VSet linkMapThinProcess(Graph<VTYPE> &G, VSet &U, H &h, F &f, M &m, C &c, R &r) {
 	VSet res;
 	DefineCmb(cmb) {
 		auto e = use_edge(h);
@@ -226,17 +226,17 @@ VSet mapEdgesSparse(Graph<VTYPE> &G, VSet &U, H &h, F &f, M &m, C &c, R &r) {
 
 
 template<class VTYPE, class F, class M, class C, class R, class H> 
-VSet mapEdges(Graph<VTYPE> &G, VSet &U, H h, F &f, M &m, C &c, R &r) {
+VSet linkMapProcess(Graph<VTYPE> &G, VSet &U, H h, F &f, M &m, C &c, R &r) {
 	int len = Size(U);
 	if (len > THRESHOLD) 
-		return mapEdgesDense(G, U, h, f, m, c);
+		return linkMapThickProcess(G, U, h, f, m, c);
 	else 
-		return mapEdgesSparse(G, U, h, f, m, c, r);
+		return linkMapThinProcess(G, U, h, f, m, c, r);
 }
 
 template<class VTYPE, class F, class M, class C, class R, class H> 
-VSet mapEdges(Graph<VTYPE> &G, VSet &U, H h, VSet &T, F &f, M &m, C &c, R &r) {
-	return mapEdgesDense(G, U, h, T, f, m, c);
+VSet linkMapProcess(Graph<VTYPE> &G, VSet &U, H h, VSet &T, F &f, M &m, C &c, R &r) {
+	return linkMapThickProcess(G, U, h, T, f, m, c);
 }
 
 #endif

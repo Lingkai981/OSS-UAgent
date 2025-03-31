@@ -113,12 +113,14 @@ class Get_prompty_expert(BaseModel):
 
 
 llm = ChatOpenAI(
+    openai_api_base="https://chatapi.littlewheat.com/v1",
     openai_api_key=my_config.get_api_key(),
     model = 'gpt-4o',
     temperature=0.7
 )
 
 embeddings = OpenAIEmbeddings(
+    openai_api_base="https://chatapi.littlewheat.com/v1",
     openai_api_key=my_config.get_api_key()
 )
 

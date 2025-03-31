@@ -1,7 +1,4 @@
-# LLM-based usability evaluation
-
-## Overview
-This project is a LLM-based usability evaluation framework including an automated code generator and a code evaluator based on large language models (LLMs), supporting multiple graph analysis platforms and common algorithm implementations. The framework uses Retrieval-Augmented Generation (RAG) technology combined with platform API specifications to generate algorithm implementation code that meets specific platform requirements, and provides multi-dimensional code quality evaluation.
+# OSS-UAgent: An Agent-based Usability Evaluation Framework for Open Source Software
 
 ## Quick Start
 
